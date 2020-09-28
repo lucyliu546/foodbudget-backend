@@ -79,23 +79,28 @@ class ExpensesAPI(APIView):
     """
     def get(self, request, format=None):
         user = request.user
+        # determines if a date filter is used
         if request.query_params.get('startdate'):
             start_date = datetime.datetime.strptime(request.query_params.get('startdate'), '%Y-%m-%d')
             end_date =  datetime.datetime.strptime(request.query_params.get('enddate'), '%Y-%m-%d')
-            
+            print(start_date, end_date)
             budget_list = Expenses.objects.values_list('bID__bName', flat=True).distinct()
             group_by_value = {}
             date_list = Expenses.objects.filter(eUser=user).filter(eDate__gte=start_date, eDate__lte=end_date).order_by('eDate').values_list('eDate', flat=True).distinct()
+            print(date_list)
         else:
             budget_list = Expenses.objects.values_list('bID__bName', flat=True).distinct()
             group_by_value = {}
-            if request.query_params.get('datetype') == 'Annually':
-                date_list = Expenses.objects.filter(eUser=user).annotate(month = TruncMonth('eDate')).values_list('month', flat=True).order_by('month').distinct('month')
-                date_list = [str(s.month) for s in date_list]
+
+        # determines if the filter is annual or monthly
+        if request.query_params.get('datetype') == 'Annually':
+            date_list = Expenses.objects.filter(eUser=user).filter(eDate__gte=start_date, eDate__lte=end_date).annotate(month = TruncMonth('eDate')).values_list('month', flat=True).order_by('month').distinct('month')
+            date_list = [str(s.month) for s in date_list]
+            print(date_list)
                 
-            else:
-                date_list = Expenses.objects.filter(eUser=user).values_list('eDate', flat=True).order_by('eDate').distinct()
-                date_list = [str(s) for s in date_list]
+        else:
+            date_list = Expenses.objects.filter(eUser=user).values_list('eDate', flat=True).order_by('eDate').distinct()
+            date_list = [str(s) for s in date_list]
         
         
         # below groups individual expenses by budget then date
@@ -110,7 +115,7 @@ class ExpensesAPI(APIView):
         else:
             if request.query_params.get('datetype') == 'Annually':
                 for d in date_list:
-                    budget_list = Expenses.objects.filter(eUser=user).filter(eDate__month=d).values_list('bID__bName', flat=True).distinct()
+                    budget_list = Expenses.objects.filter(eUser=user).filter(eDate__gte=start_date, eDate__lte=end_date).filter(eDate__month=d).values_list('bID__bName', flat=True).distinct()
                     
                     group_by_value[d] = {}
                     for budget in budget_list:
@@ -118,7 +123,7 @@ class ExpensesAPI(APIView):
                             Expenses.objects.filter(eUser=user).filter(bID__bName = budget).filter(eDate__month = d).aggregate(total_expenses = Sum('eAmount')).values()
                             # 'all_expenses': Expenses.objects.filter(eUser=user).filter(bID__bName = value).filter(eDate = date).values() 
                         } 
-                print(group_by_value)
+                
             else:
                  for d in date_list:
                     budget_list = Expenses.objects.filter(eUser=user).filter(eDate=d).values_list('bID__bName', flat=True).distinct()

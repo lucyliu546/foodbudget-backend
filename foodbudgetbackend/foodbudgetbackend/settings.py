@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import datetime
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -79,18 +80,29 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'budgets',                      # Or path to database file if using sqlite3.
-        
-        'USER': 'postgres',
-        'PASSWORD': "plano12'",
-        'HOST': 'localhost',                             
-        'PORT': '',  
+if 'ebdb' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['ebdb'],
+            'USER': os.environ['lucyliu546'],
+            'PASSWORD': os.environ['plano12''],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['5432'],
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'budgets',                      # Or path to database file if using sqlite3.
+            
+            'USER': 'postgres',
+            'PASSWORD': "plano12'",
+            'HOST': 'aae2mq259vaaeh.cum1wm5bwl64.us-east-2.rds.amazonaws.com',                             
+            'PORT': '',  
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -129,6 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
