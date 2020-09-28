@@ -86,7 +86,7 @@ if 'ebdb' in os.environ:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': os.environ['ebdb'],
             'USER': os.environ['lucyliu546'],
-            'PASSWORD': os.environ['plano12''],
+            'PASSWORD': os.environ["plano12'"],
             'HOST': os.environ['RDS_HOSTNAME'],
             'PORT': os.environ['5432'],
         }
