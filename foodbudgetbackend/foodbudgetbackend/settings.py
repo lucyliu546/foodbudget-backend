@@ -98,11 +98,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['ebdb'],
-            'USER': os.environ['lucyliu546'],
-            'PASSWORD': os.environ["plano12'"],
-            'HOST': os.environ['aae2mq259vaaeh.cum1wm5bwl64.us-east-2.rds.amazonaws.com'],
-            'PORT': os.environ['5432'],
+            'NAME': 'ebdb',
+            'USER': 'lucyliu546',
+            'PASSWORD': "plano12'",
+            'HOST': 'aae2mq259vaaeh.cum1wm5bwl64.us-east-2.rds.amazonaws.com',
+            'PORT': '5432',
         }
     }
 
