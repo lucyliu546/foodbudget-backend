@@ -80,18 +80,7 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if 'ebdb' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['ebdb'],
-            'USER': os.environ['lucyliu546'],
-            'PASSWORD': os.environ["plano12'"],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['5432'],
-        }
-    }
-else:
+if 'localhost' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -99,8 +88,21 @@ else:
             
             'USER': 'postgres',
             'PASSWORD': "plano12'",
-            'HOST': 'aae2mq259vaaeh.cum1wm5bwl64.us-east-2.rds.amazonaws.com',                             
+            'HOST': 'localhost',                             
             'PORT': '',  
+        }
+    }
+else:
+    
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['ebdb'],
+            'USER': os.environ['lucyliu546'],
+            'PASSWORD': os.environ["plano12'"],
+            'HOST': os.environ['aae2mq259vaaeh.cum1wm5bwl64.us-east-2.rds.amazonaws.com'],
+            'PORT': os.environ['5432'],
         }
     }
 
