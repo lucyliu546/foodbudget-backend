@@ -93,18 +93,19 @@ if 'localhost' in os.environ:
         }
     }
 else:
-    
-
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'ebdb',
-            'USER': 'lucyliu546',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'budgets',                      # Or path to database file if using sqlite3.
+            
+            'USER': 'postgres',
             'PASSWORD': "plano12'",
-            'HOST': 'aae2mq259vaaeh.cum1wm5bwl64.us-east-2.rds.amazonaws.com',
-            'PORT': '5432',
+            'HOST': 'localhost',                             
+            'PORT': '',  
         }
     }
+
+    
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
