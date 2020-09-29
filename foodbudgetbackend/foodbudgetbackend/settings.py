@@ -80,19 +80,7 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if 'localhost' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'budgets',                      # Or path to database file if using sqlite3.
-            
-            'USER': 'postgres',
-            'PASSWORD': "plano12'",
-            'HOST': 'localhost',                             
-            'PORT': '',  
-        }
-    }
-else:
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -144,7 +132,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
