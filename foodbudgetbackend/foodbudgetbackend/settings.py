@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-
+if 'localhost' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -90,6 +90,17 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
             'PASSWORD': "plano12'",
             'HOST': 'localhost',                             
             'PORT': '',  
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'ebdb',
+            'USER': 'lucyliu546',
+            'PASSWORD': 'plano123',
+            'HOST': 'aazy3k3qzy1zt0.cum1wm5bwl64.us-east-2.rds.amazonaws.com',
+            'PORT': '5432',
         }
     }
 
@@ -131,6 +142,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 
 
