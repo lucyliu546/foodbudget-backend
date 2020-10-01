@@ -84,19 +84,7 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if 'RDS_DB_NAME' in os.environ :
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'ebdb',                      # Or path to database file if using sqlite3.
-            
-            'USER': 'postgres',
-            'PASSWORD': "plano12'",
-            'HOST': 'localhost',                             
-            'PORT': '',  
-        }
-    }
-else:
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
