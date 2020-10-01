@@ -27,7 +27,11 @@ SECRET_KEY = '+^o7j#x$czjv=t_ryhd2(s(lo+xya(103=)bskr_lgn&dt=io7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.elasticbeanstalk.com',
+]
 
 
 # Application definition
@@ -80,7 +84,7 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if 'localhost' in os.environ:
+try:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -92,7 +96,7 @@ if 'localhost' in os.environ:
             'PORT': '',  
         }
     }
-else:
+except:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
