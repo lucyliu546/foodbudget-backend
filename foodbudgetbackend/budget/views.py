@@ -5,7 +5,7 @@ from django.db.models import Sum, Count, F
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from rest_framework import permissions, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import mixins, viewsets
@@ -19,8 +19,19 @@ from django.db.models.functions import Coalesce
 from django.db.models.functions import TruncMonth
 import datetime
 import calendar
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 
 # Create your views here.
+
+class ApiRoot(APIView):
+    def get(self, request, format=None):
+        content = {
+            'status': 'request was permitted'
+        }
+        return Response(content)
 
 class BudgetsAPI(viewsets.ModelViewSet):
     """
@@ -40,7 +51,7 @@ class BudgetsAPI(viewsets.ModelViewSet):
         }
     ]
     """
-    
+    permission_classes = [IsAuthenticated]
     serializer_class = BudgetsSerializer
     def get_queryset(self):
         req = self.request
@@ -53,7 +64,7 @@ class BudgetsAPI(viewsets.ModelViewSet):
         return Budgets.objects.filter(bUser=user).annotate(total_expenses = Sum('budget__eAmount'))
 
 class AllExpensesAPI(viewsets.ModelViewSet):
-    
+    permission_classes = [IsAuthenticated]
     serializer_class = ExpensesAllSerializer
 
     def create(self, request, *args, **kwargs):
@@ -77,6 +88,7 @@ class ExpensesAPI(APIView):
         Returns dictionary of expenses (includes individual and sum)
         For individual expenses add ?format=json&type=all to url
     """
+    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         user = request.user
         # determines if a date filter is used
@@ -157,6 +169,7 @@ class ExpensesAPI(APIView):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def current_user(request): 
     """
     Use this view when a user revisits the site, reloads, etc. 
@@ -171,7 +184,7 @@ class UserList(APIView):
     Create a new user. It's called 'UserList' because normally we'd have a get
     method here too, for retrieving a list of all User objects.
     """
-
+    
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):

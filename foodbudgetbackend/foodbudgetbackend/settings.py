@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -96,7 +98,17 @@ DATABASES = {
         }
     }
 
-    
+""" DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'budgets',                      # Or path to database file if using sqlite3.
+            
+            'USER': 'postgres',
+            'PASSWORD': "plano12'",
+            'HOST': 'localhost',                             
+            'PORT': '',  
+        }
+    }  """  
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -140,7 +152,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -153,6 +165,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://localhost:8000',
     'http://127.0.0.1:3000',
+    'http://foodbudget-frontend.s3-website.us-east-2.amazonaws.com',
     
     
     
