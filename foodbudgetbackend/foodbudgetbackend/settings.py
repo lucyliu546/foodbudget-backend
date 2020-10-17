@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import datetime
 import os
+from .secretsettings import * 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -21,8 +22,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+^o7j#x$czjv=t_ryhd2(s(lo+xya(103=)bskr_lgn&dt=io7'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,28 +87,7 @@ WSGI_APPLICATION = 'foodbudgetbackend.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
-DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'ebdb',
-            'USER': 'lucyliu546',
-            'PASSWORD': 'plano123',
-            'HOST': 'aazy3k3qzy1zt0.cum1wm5bwl64.us-east-2.rds.amazonaws.com',
-            'PORT': '5432',
-        }
-    }
 
-""" DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'budgets',                      # Or path to database file if using sqlite3.
-            
-            'USER': 'postgres',
-            'PASSWORD': "plano12'",
-            'HOST': 'localhost',                             
-            'PORT': '',  
-        }
-    }  """  
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
